@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BookStore.Models.ViewModels.EBookVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>管理電子書</h2>
+<form method="get">
+    <div class="row">
+        <div class="col-md-2">
+            <label class="form-label col-md" for="bookName">查詢書籍:</label>
+            @Html.TextBox("bookName", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="查詢" class="btn btn-primary mt-4" />
+        </div>
+    </div>
+</form>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileLink)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sample)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileLink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sample)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

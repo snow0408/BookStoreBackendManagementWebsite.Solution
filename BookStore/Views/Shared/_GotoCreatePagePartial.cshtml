@@ -1,0 +1,8 @@
+﻿@*@model string*@
+@{
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+}
+<a href="@Url.Action("Create", controllerName)" class="btn btn-sm btn-primary">
+    <i class="fa-solid fa-plus"></i>
+    新增
+</a>

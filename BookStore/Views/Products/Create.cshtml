@@ -1,0 +1,266 @@
+﻿@model BookStore.Models.ViewModels.ProductCreateVm
+
+@{
+    ViewBag.Title = "新增商品";
+    IEnumerable<SelectListItem> productSelectList = ViewBag.ProductStatusList;
+    IEnumerable<SelectListItem> productCategorySelectList = ViewBag.ProductCategoryList;
+    string selectBook = ViewBag.SelectBook;
+    string selectBookSeller = ViewBag.SelectBookSeller;
+    IEnumerable<string> selectKeywords = ViewBag.SelectKeywords;
+    DateTime publisherDate = ViewBag.PublisherDate;
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-horizontal">
+                            <h2>新增商品</h2>
+                            <hr />
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col-4">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @style = "resize:none;", @rows = "5" })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.DropDownListFor(model => model.Category, productCategorySelectList, new { @class = "form-select", @id = "prodCategory" })
+                                        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.ProductStatus, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.DropDownListFor(model => model.ProductStatus, productSelectList, new { @class = "form-select" })
+                                        @Html.ValidationMessageFor(model => model.ProductStatus, "", new { @class = "text-danger" })
+                                    </div>      
+                                    
+                                    @*<div class="mb-2">
+                                        @Html.LabelFor(model => model.ProductKeywordsId, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        <input class="keywordInput form-control" name="keyowrd" placeholder="請輸入產品關鍵詞" value="">
+                                        @Html.ValidationMessageFor(model => model.ProductKeywordsId, "", new { @class = "text-danger" })
+
+                                        <input type="text" id="hiddenKeywordId" hidden name="ProductKeywordsId" value="@ViewBag.SelectPublisherId" />
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        <input type="file" name="productPictureFile" id="productPictureFile" class="form-control" />
+                                        @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })
+                                    </div>*@
+
+                                    <div class="mb-3 ms-2">
+                                        <input type="submit" value="新增" class="btn btn-primary" />
+                                    </div>
+                                    <div>
+                                        @Html.ActionLink("回到上一頁", "Index", null, new { @class = "ms-3" })
+                                    </div>
+                                </div>
+
+                                <div class="col-1"></div>
+                                <div id="book-product" class="col-4">
+                                    <div class="mb-2 mt-5">
+                                        <label class="form-label col-md-2" for="BookProduct_BookName">所選書籍</label>
+                                        <div id="scrollable-dropdown-menu">
+                                            <input class="bookInput form-control" type="text" placeholder="請輸入書籍名稱" id="BookProduct_BookName" name="BookProduct.BookName" />
+                                        </div>
+                                        <input type="text" id="hiddenBookId" hidden name="BookProduct.BookId" value="@ViewBag.SelectBookId" />
+
+                                        @Html.ValidationMessageFor(model => model.BookProduct.BookId, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label col-md-2" for="BookProduct_PublisherName">出版商</label>
+
+                                        <div id="scrollable-dropdown-menu">
+                                            <input class="bookSellerInput form-control" type="text" placeholder="請輸入出版商名稱" id="BookProduct_PublisherName" name="BookProduct.PublisherName" />
+                                        </div>
+                                        <input type="text" id="hiddenBookSellerId" hidden name="BookProduct.PublisherId" value="@ViewBag.SelectPublisherId" />
+
+                                        @Html.ValidationMessageFor(model => model.BookProduct.PublisherId, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label col-md-2" for="BookProduct_PublishDate">出版日期</label>
+
+                                        <div class="input-group flatpicker-calender">
+                                            <input class="form-control dateinput" id="datetime-local" type="date" name="BookProduct.PublishDate" value=dateinput>
+                                        </div>
+
+                                        @Html.ValidationMessageFor(model => model.BookProduct.PublishDate, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label col-md-2" for="BookProduct_ISBN">ISBN</label>
+                                        <input class="form-control text-box single-line" id="BookProduct_ISBN" name="BookProduct.ISBN" type="text" value="@ViewBag.ISBN">
+
+                                        @Html.ValidationMessageFor(model => model.BookProduct.ISBN, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="mt-2" style="visibility:hidden">1</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    let uri = "/api/BookAPI";
+    let bookSellerUri = "/api/BookSellerAPI";
+    let keywordUrl = "/api/KeywordsAPI"
+    let bookArr = [];
+    let bookSellerArr = [];
+    let keywordArr = [];
+
+    const bookInput = document.querySelector(".bookInput");
+    const bookSellerInput = document.querySelector(".bookSellerInput");
+/*    const keywordInput = document.querySelector(".keywordInput");*/
+
+    const hiddenBookId = document.querySelector("#hiddenBookId");
+    const hiddenBookSellerId = document.querySelector("#hiddenBookSellerId");
+    const hiddenKeywordId = document.querySelector("#hiddenKeywordId");
+
+    const bookProduct = document.querySelector("#book-product");
+    const prodCategory = document.querySelector("#prodCategory");
+
+    //更新產品分類的頁面
+    let CategoryChose = (selectValue) => {
+        if (selectValue == "實體書" || selectValue == "電子書") {
+            bookProduct.removeAttribute("hidden");
+        }
+        else {
+            bookProduct.setAttribute("hidden", true);
+        }
+    }
+
+    CategoryChose(prodCategory.value);
+
+    @*//向資料庫取得關鍵詞資料
+    $.getJSON(keywordUrl)
+    .done(function (data) {
+        $.each(data, function (item, key) {
+            keywordArr.push({ id:key  , value:item })
+        });
+
+        const keywordSelectJson = @Html.Raw(Json.Encode(selectKeywords));
+       
+
+        keywordInput.value = keywordSelectJson;
+       
+
+        tagifyKeyword = new Tagify(keywordInput, {
+            whitelist: keywordArr,
+            mapValueTo: "id",
+            maxTags: 10,
+            dropdown: {
+                maxItems: 20, // <- mixumum allowed rendered suggestions
+                classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                enabled: 0, // <- show suggestions on focus
+                closeOnSelect: false, // <- do not hide the suggestions dropdown once an item has been selected
+            }
+        });
+    });*@
+
+    //向資料庫取得書籍資料
+    $.getJSON(uri)
+        .done(function (data) {
+            $.each(data, function (item, key) {
+                bookArr.push({ id:key  , value:item })
+            });
+
+            const bookSelectJson = @Html.Raw(Json.Encode(selectBook));
+            console.log(bookSelectJson);
+
+            bookInput.value = bookSelectJson;
+            console.log(bookInput);
+
+            tagify = new Tagify(bookInput, {
+                enforceWhitelist: true,
+                mode: "select",
+                whitelist: bookArr,
+                mapValueTo: "id"
+            });
+        });
+
+    //向資料庫取得書商資料
+    $.getJSON(bookSellerUri)
+    .done(function (data) {
+        $.each(data, function (item, key) {
+                bookSellerArr.push({ id:key  , value:item })
+        });
+
+            const bookSellerSelectJson = @Html.Raw(Json.Encode(selectBookSeller));
+            console.log(bookSellerSelectJson);
+
+            bookSellerInput.value = bookSellerSelectJson;
+            console.log(bookSellerInput);
+
+            tagifyBookSeller = new Tagify(bookSellerInput, {
+            enforceWhitelist: true,
+            mode: "select",
+            whitelist: bookSellerArr,
+            mapValueTo: "id"
+        });
+        });
+
+        //更新 select 選取值
+        bookInput.addEventListener("change", () => {
+            hiddenBookId.value = tagify.value[0].id
+        });
+        bookSellerInput.addEventListener("change", () => {
+            hiddenBookSellerId.value = tagifyBookSeller.value[0].id
+        })
+        //keywordInput.addEventListener("change", () => {
+        //    hiddenKeywordId.value = tagifyKeyword.value[0].id
+        //    console.log(keywordInput);
+        //})
+
+    
+    console.log("成功獲取書籍清單")
+
+
+    //取得傳進來的日期
+    let dateString = JSON.parse('@Html.Raw(Json.Encode(publisherDate))')
+    console.log(dateString)
+    let milli = dateString.replace(/\/Date\((-?\d+)\)\//, '$1');
+    let publishDateJs = new Date(parseInt(milli));
+    console.log(publishDateJs)
+        const year = publishDateJs.getFullYear();
+        const month = `0${publishDateJs.getMonth() + 1}`.slice(-2);
+    const day = `0${publishDateJs.getDate()}`.slice(-2);
+
+    publishDateJs = `${year}-${month}-${day}`;
+    console.log(publishDateJs)
+    const dateInput = document.querySelector("#datetime-local");
+    dateInput.value = publishDateJs;
+
+    prodCategory.addEventListener("change", (e) => {
+        const selectValue = e.target.value;
+        CategoryChose(selectValue);
+    })
+</script>
+}
+

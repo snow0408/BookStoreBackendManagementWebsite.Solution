@@ -1,0 +1,505 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="~/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="~/images/favicon.png" type="image/x-icon">
+    <title>@ViewBag.Title - The print of time"</title>
+
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/font-awesome.css">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/icofont.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/themify.css">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/flag-icon.css">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/feather-icon.css">
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/animate.css">
+
+    <!-- Selcet2新 -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/select2.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/tagify.css">
+    <!-- flatpickr新增 -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/flatpickr/flatpickr.min.css">
+    <!-- Add-Products -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/quill.snow.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/intltelinput.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/dropzone.css">
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/date-picker.css">
+    <!--  aweetAlert -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/sweetalert2.css">
+
+    <!-- Plugins css Ends-->
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/style.css">
+    <link id="color" rel="stylesheet" href="~/Content/css/color-1.css" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/vendors/flatpickr/flatpickr.min.css">
+
+
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+</head>
+<body onload="startTime()">
+    <!-- loader starts-->
+    <div class="loader-wrapper">
+        <div class="loader-index"> <span></span></div>
+        <svg>
+            <defs></defs>
+            <filter id="goo">
+                <fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
+                <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
+            </filter>
+        </svg>
+    </div>
+    <!-- loader ends-->
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        <!-- Page Header Start-->
+        <div class="page-header">
+            <div class="header-wrapper row m-0">
+                <form class="form-inline search-full col" action="#" method="get">
+                    <div class="form-group w-100">
+                        <div class="Typeahead Typeahead--twitterUsers">
+                            <div class="u-posRelative">
+                                <input class="demo-input Typeahead-input form-control-plaintext w-100" type="text" placeholder="Search Cuba .." name="q" title="" autofocus>
+                                <div class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div><i class="close-search" data-feather="x"></i>
+                            </div>
+                            <div class="Typeahead-menu"></div>
+                        </div>
+                    </div>
+                </form>
+                <div class="header-logo-wrapper col-auto p-0">
+                    <div class="logo-wrapper"><a href="~/WeHome/Index"><img class="img-fluid" src="~/images/logo/logo.png" alt=""></a></div>
+                    <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
+                </div>
+                <div class="left-header col-xxl-5 col-xl-6 col-lg-5 col-md-4 col-sm-3 p-0">
+                    <div class="notification-slider">
+
+
+                    </div>
+                </div>
+                <div class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto">
+                    <ul class="nav-menus">
+
+                        <li>
+                            <div class="mode">
+                                <svg>
+                                    <use href="~/svg/icon-sprite.svg#moon"></use>
+                                </svg>
+                            </div>
+                        </li>
+
+                        @*<li class="onhover-dropdown">
+                                <div class="notification-box">
+                                    <svg>
+                                        <use href="~/svg/icon-sprite.svg#notification"></use>
+                                    </svg><span class="badge rounded-pill badge-secondary">4 </span>
+                                </div>
+                                <div class="onhover-show-div notification-dropdown">
+                                    <h6 class="f-18 mb-0 dropdown-title">Notitications                               </h6>
+                                    <ul>
+                                        <li class="b-l-primary border-4">
+                                            <p>Delivery processing <span class="font-danger">10 min.</span></p>
+                                        </li>
+                                        <li class="b-l-success border-4">
+                                            <p>Order Complete<span class="font-success">1 hr</span></p>
+                                        </li>
+                                        <li class="b-l-secondary border-4">
+                                            <p>Tickets Generated<span class="font-secondary">3 hr</span></p>
+                                        </li>
+                                        <li class="b-l-warning border-4">
+                                            <p>Delivery Complete<span class="font-warning">6 hr</span></p>
+                                        </li>
+                                        <li><a class="f-w-700" href="#">Check all</a></li>
+                                    </ul>
+                                </div>
+                            </li>*@
+                        <li class="profile-nav onhover-dropdown pe-0 py-0">
+                            <div class="media profile-media">
+                                <img class="b-r-10" src="~/images/dashboard/profile.png" alt="">
+                                <div class="media-body">
+                                    <span>Emay Walter</span>
+                                    <p class="mb-0">Admin <i class="middle fa fa-angle-down"></i></p>
+                                </div>
+                            </div>
+                            <ul class="profile-dropdown onhover-show-div">
+                                <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
+                                <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
+                                <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
+                                <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
+                                <li><a href="#"><i data-feather="log-in"> </i><span>Log in</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <script class="result-template" type="text/x-handlebars-template">
+                    <div class="ProfileCard u-cf">
+                        <div class="ProfileCard-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay m-0"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg></div>
+                        <div class="ProfileCard-details">
+                            <div class="ProfileCard-realName">{{name}}</div>
+                        </div>
+                    </div>
+                </script>
+                <script class="empty-template" type="text/x-handlebars-template">
+                    <div class="EmptyMessage">Your search turned up 0 results. This most likely means the backend is down, yikes!</div>
+                </script>
+            </div>
+        </div>
+        <!-- Page Header Ends                              -->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            <div class="sidebar-wrapper" sidebar-layout="stroke-svg">
+                <div>
+                    <div class="logo-wrapper">
+                        <a href="~/WeHome/Index"><img class="img-fluid for-light" src="~/images/logo/logo.png" alt=""><img class="img-fluid for-dark" src="~/images/logo/logo_dark.png" alt=""></a>
+                        <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+
+                    </div>
+                    <div class="logo-icon-wrapper"><a href="~/WeHome/Index"><img class="img-fluid" src="~/images/logo/logo-icon.png" alt=""></a></div>
+                    <div class="main0124">
+
+                    </div>
+
+                    <nav class="sidebar-main">
+                        <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+                        <div id="sidebar-menu">
+                            <ul class="sidebar-links" id="simple-bar">
+                                <li class="back-btn">
+                                    <a href="~/WeHome/Index"><img class="img-fluid" src="~/images/logo/logo-icon.png" alt=""></a>
+                                    <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
+                                </li>
+
+                                <li class="sidebar-main-title">
+                                    <div>
+                                        <h6>Store Management</h6>
+                                    </div>
+                                </li>
+
+                                <li class="sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="~/Member/Index">
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-user"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#fill-user"></use>
+                                        </svg><span>會員管理</span>
+                                    </a>
+
+                                </li>
+
+                                <li class="sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-to-do"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#fill-ecommerce"></use>
+
+                                        </svg> <span>產品管理</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+                                        <li><a href="~/Categories/index">書籍分類</a></li>
+                                        <li><a href="~/Books/index">書籍資料</a></li>
+                                        <li><a href="~/keywords/index">關鍵詞</a></li>
+                                        <li><a href="~/Products/index">商品管理</a></li>
+                                        <li><a href="~/EBook/index">電子書管理</a></li>
+                                        <li><a href="~/UsedBooks/index">二手書</a></li>
+
+
+                                    </ul>
+                                </li>
+
+                                <li class="sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title  link-nav" href="~/Booksellers/Index">
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-job-search"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#fill-job-search"></use>
+                                        </svg><span>書商管理</span>
+                                    </a>
+
+                                </li>
+
+
+                                <li class="sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-user"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-ecommerce"></use>
+                                        </svg><span>實體/電子書訂單管理</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+
+                                        <li><a href="~/Orders/Index">訂單管理</a></li>
+                                        <li><a href="~/EBooksPermission/Index">電子書權限管理</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li class="mega-menu sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="~/UsedBookOrder/Index">
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-others"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#fill-others"></use>
+                                        </svg><span>二手書訂單管理</span>
+                                    </a>
+                                </li>
+                                @*<li class="sidebar-list">
+                                        <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="letter-box.html">
+                                            <svg class="stroke-icon">
+                                                <use href="~/svg/icon-sprite.svg#stroke-email"></use>
+                                            </svg>
+                                            <svg class="fill-icon">
+                                                <use href="~/svg/icon-sprite.svg#fill-email"></use>
+                                            </svg><span>意見回饋管理</span>
+                                        </a>
+                                    </li>*@
+
+                                <li class="sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-bonus-kit"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#fill-bonus-kit"></use>
+                                        </svg><span>活動折扣管理</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+                                        <li><a href="~/PromotionEvents/Index">活動總覽</a></li>
+                                        <li><a href="~/PromotionEvents/Create">活動創建</a></li>
+
+                                    </ul>
+                                </li>
+
+                                @*<li class="sidebar-list">
+                                        <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="knowledgebase.html">
+                                            <svg class="stroke-icon">
+                                                <use href="~/svg/icon-sprite.svg#stroke-knowledgebase"></use>
+                                            </svg>
+                                            <svg class="fill-icon">
+                                                <use href="~/svg/icon-sprite.svg#fill-knowledgebase"></use>
+                                            </svg><span>公告版管理</span>
+                                        </a>
+                                    </li>*@
+
+                                <li class="sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-blog"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#fill-blog"></use>
+                                        </svg><span>文章管理</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+                                        <li><a href="~/Article/Index">文章總覽</a></li>
+                                        <li><a href="~/Article/Create">文章創建</a></li>
+                                    </ul>
+                                </li>
+
+                                @*<li class="sidebar-list">
+                                        <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                            <svg class="stroke-icon">
+                                                <use href="~/svg/icon-sprite.svg#stroke-charts"></use>
+                                            </svg>
+                                            <svg class="fill-icon">
+                                                <use href="~/svg/icon-sprite.svg#fill-charts"></use>
+                                            </svg><span>數據分析</span>
+                                        </a>
+                                        <ul class="sidebar-submenu">
+                                            <li><a href="chart-google.html">Google Chart</a></li>
+                                            <li><a href="chart-sparkline.html">Sparkline chart</a></li>
+
+                                        </ul>
+                                    </li>*@
+
+                                <li class="sidebar-main-title">
+                                    <div>
+                                        <h6>Business Management</h6>
+                                    </div>
+                                </li>
+
+                                <li class="sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="~/Employee/Index">
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-landing-page"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#fill-landing-page"></use>
+                                        </svg><span>職員帳號管理</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-list">
+                                    <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title  link-nav" href="~/Group/Index">
+                                        <svg class="stroke-icon">
+                                            <use href="~/svg/icon-sprite.svg#stroke-learning"></use>
+                                        </svg>
+                                        <svg class="fill-icon">
+                                            <use href="~/svg/icon-sprite.svg#fill-learning"></use>
+                                        </svg><span>權限控管</span>
+                                    </a>
+
+                                </li>
+
+
+
+                                @*<li class="sidebar-list">
+                                        <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title link-nav" href="faq.html">
+                                            <svg class="stroke-icon">
+                                                <use href="~/svg/icon-sprite.svg#stroke-faq"></use>
+                                            </svg>
+                                            <svg class="fill-icon">
+                                                <use href="~/svg/icon-sprite.svg#fill-faq"></use>
+                                            </svg><span>操作紀錄</span>
+                                        </a>
+                                    </li>*@
+
+                            </ul>
+                        </div>
+                        <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
+                    </nav>
+                </div>
+            </div>
+
+
+            <!-- Page Sidebar Ends-->
+
+            <div class="page-body bg-image">
+                @*style="background-image: url('/images/bg.jpg'); background-size: cover; height: 100vh; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">*@
+                <!-- 放置在 page-body 内的内容 -->
+                @RenderBody()
+            </div>
+
+
+            <!-- footer start-->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 footer-copyright text-center">
+                            <p class="mb-0">Copyright 2024 ©  by The print of time</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- latest jquery-->
+    <script src="~/Scripts/js/jquery.min.js"></script>
+    <!-- Bootstrap js-->
+    <script src="~/Scripts/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- feather icon js-->
+    <script src="~/Scripts/js/icons/feather-icon/feather.min.js"></script>
+    <script src="~/Scripts/js/icons/feather-icon/feather-icon.js"></script>
+    <!-- scrollbar js-->
+    <script src="~/Scripts/js/scrollbar/simplebar.js"></script>
+    <script src="~/Scripts/js/scrollbar/custom.js"></script>
+    <!-- Sidebar jquery-->
+    <script src="~/Scripts/js/config.js"></script>
+    <!-- Plugins JS start-->
+    <script src="~/Scripts/js/sidebar-menu.js"></script>
+    <script src="~/Scripts/js/sidebar-pin.js"></script>
+    <script src="~/Scripts/js/clock.js"></script>
+    <script src="~/Scripts/js/slick/slick.min.js"></script>
+    <script src="~/Scripts/js/slick/slick.js"></script>
+    <script src="~/Scripts/js/header-slick.js"></script>
+    <script src="~/Scripts/js/chart/apex-chart/apex-chart.js"></script>
+    <script src="~/Scripts/js/chart/apex-chart/stock-prices.js"></script>
+    <script src="~/Scripts/js/chart/apex-chart/moment.min.js"></script>
+    @*<script src="~/Scripts/js/notify/bootstrap-notify.min.js"></script>*@
+    <script src="~/Scripts/js/dashboard/default.js"></script>
+    <script src="~/Scripts/js/notify/index.js"></script>
+    <script src="~/Scripts/js/typeahead/handlebars.js"></script>
+    <script src="~/Scripts/js/typeahead/typeahead.bundle.js"></script>
+    <script src="~/Scripts/js/typeahead/typeahead.custom.js"></script>
+    <script src="~/Scripts/js/typeahead-search/handlebars.js"></script>
+    <script src="~/Scripts/js/typeahead-search/typeahead-custom.js"></script>
+    <script src="~/Scripts/js/height-equal.js"></script>
+    <script src="~/Scripts/js/animation/wow/wow.min.js"></script>
+
+    <!-- Select2新增  -->
+    <script src="~/Scripts/js/select2/select2.full.min.js"></script>
+    <script src="~/Scripts/js/select2/select2-custom.js"></script>
+    <script src="~/Scripts/js/select2/tagify.js"></script>
+    <script src="~/Scripts/js/select2/tagify.polyfills.min.js"></script>
+    <script src="~/Scripts/js/select2/select3-custom.js"></script>
+    <script src="~/Scripts/js/select2/intltelinput.min.js"></script>
+    <script src="~/Scripts/js/select2/telephone-input.js"></script>
+    <script src="~/Scripts/js/select2/custom-inputsearch.js"></script>
+    <script src="~/Scripts/js/height-equal.js"></script>
+    <!--  flatpickr新增  -->
+    <script src="~/Scripts/js/flat-pickr/flatpickr.js"></script>
+    <script src="~/Scripts/js/flat-pickr/custom-flatpickr.js"></script>
+    <!--  Add-Product -->
+    <script src="~/Scripts/js/dropzone/dropzone.js"></script>
+    <script src="~/Scripts/js/dropzone/dropzone-script.js"></script>
+    <script src="~/Scripts/js/add-product/select4-custom.js"></script>
+    <script src="~/Scripts/js/editors/quill.js"></script>
+    <script src="~/Scripts/js/custom-add-product.js"></script>
+    <script src="~/Scripts/js/tooltip-init.js"></script>
+    <!-- Datepicker JS -->
+    <script src="~/Scripts/js/datepicker/date-picker/datepicker.js"></script>
+    <script src="~/Scripts/js/datepicker/date-picker/datepicker.en.js"></script>
+    <script src="~/Scripts/js/datepicker/date-picker/datepicker.custom.js"></script>
+    <!-- sweetAlert -->
+    <script src="~/Scripts/js/sweet-alert/sweetalert.min.js"></script>
+    <script src="~/Scripts/js/sweet-alert/app.js"></script>
+    <!--  Datepciker新增  -->
+    <script src="~/Scripts/js/flat-pickr/flatpickr.js"></script>
+    <script src="~/Scripts/js/flat-pickr/custom-flatpickr.js"></script>
+    <script src="~/Scripts/js/touchspin_2/custom_touchspin.js"></script>
+    <script src="~/Scripts/js/js-datatables/simple-datatables@latest.js"></script>
+    <script src="~/Scripts/js/custom-list-product.js"></script>
+    <script src="~/Scripts/js/owlcarousel/owl.carousel.js"></script>
+    <script src="~/Scripts/js/ecommerce.js"></script>
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    <script src="~/Scripts/js/script.js"></script>
+    @*<script src="~/Scripts/js/theme-customizer/customizer.js"></script>*@
+    <script>new WOW().init();</script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

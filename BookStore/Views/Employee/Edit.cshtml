@@ -1,0 +1,140 @@
+﻿@model BookStore.Models.ViewModels.EmployeeVm
+
+@{
+    ViewBag.Title = "編輯職員";
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6 d-flex">
+                <i class="fa-solid fa-pen-to-square" style="color: #B197FC; font-size:30px"></i>
+                <h4 class="fw-bold" style="color: #7366ff ">&nbsp;&nbsp;@ViewBag.Title</h4>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/WeHome/Index">
+                            <svg class="stroke-icon">
+                                <use href="~/svg/icon-sprite.svg#stroke-home"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="~/Employee/Index">職員帳號管理</a></li>
+                    <li class="breadcrumb-item"><a href="~/Employee/Edit">職員帳號編輯</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-body card-wrapper input-radius">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-horizontal">
+                                    <h4>職員資訊</h4>
+                                    <hr />
+
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.Id)
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.RadioButtonFor(model => model.Gender, true, new { @id = "Gender1", @name = "Gender" })
+                                            <label for="Gender1" class="me-2">男生</label>
+                                            @Html.RadioButtonFor(model => model.Gender, false, new { @id = "Gender0", @name = "Gender" })
+                                            <label for="Gender0">女生</label>    <br />
+                                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.DropDownListFor(model => model.GroupId, (SelectList)ViewBag.GroupOptions, "請選擇群組", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                 
+                                        <div class="mb-3">
+                                            <input type="submit" value="修改" class="btn btn-primary m-r-15" />
+                                            @Html.ActionLink("取消編輯", "Index", null, new { @class = "btn btn-light" })
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

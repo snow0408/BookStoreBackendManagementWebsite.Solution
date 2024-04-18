@@ -1,0 +1,134 @@
+﻿@model BookStore.Models.ViewModels.ProductEditVm
+
+@{
+    ViewBag.Title = "Edit";
+    IEnumerable<SelectListItem> productSelectList = ViewBag.ProductStatusList;
+  
+}
+
+
+
+@section styles{
+    <style>
+        input[readonly="readonly"] {
+            background-color: var(--bs-secondary-bg);
+            pointer-events: none;
+        }
+    </style>
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id) 
+    @Html.HiddenFor(model => model.Stock)
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-horizontal">
+                            <h2>編輯商品</h2>
+                            <hr />
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col-4">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @style = "resize:none;", @rows = "5" })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control", @id = "prodCategory", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.ProductStatus, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.DropDownListFor(model => model.ProductStatus, productSelectList, new { @class = "form-select" })
+                                        @Html.ValidationMessageFor(model => model.ProductStatus, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @*@Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "form-label col-md-2" })*@
+                                        @*@Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control",@hidden="hidden", @readonly = "readonly" } })*@
+                                        @*@Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })*@
+                                    </div>
+
+                                    <div class="mb-3 ms-2">
+                                        <input type="submit" value="儲存" class="btn btn-primary" />
+                                    </div>
+                                    <div>
+                                        @Html.ActionLink("回到上一頁", "Index", null, new { @class = "ms-3" })                                      
+                                    </div>
+                                </div>
+
+                                <div class="col-1"></div>
+                                <div id="book-product" class="col-4">
+                                    <div class="mb-2 mt-5">
+                                        @Html.LabelFor(model => model.BookProduct.BookName, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.BookProduct.BookName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.BookProduct.BookName, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.BookProduct.PublisherName, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.BookProduct.PublisherName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.BookProduct.PublisherName, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.BookProduct.PublishDate, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.BookProduct.PublishDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.BookProduct.PublishDate, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="mb-2">
+                                        @Html.LabelFor(model => model.BookProduct.ISBN, htmlAttributes: new { @class = "form-label col-md-2" })
+                                        @Html.EditorFor(model => model.BookProduct.ISBN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.BookProduct.ISBN, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+        const bookProduct = document.querySelector("#book-product");
+        const prodCategory = document.querySelector("#prodCategory");
+
+        //更新產品分類的頁面
+        let CategoryChose = (selectValue) => {
+            if (selectValue == "實體書" || selectValue == "電子書") {
+                bookProduct.removeAttribute("hidden");
+            }
+            else {
+                bookProduct.setAttribute("hidden", true);
+            }
+        }
+
+        CategoryChose(prodCategory.value);
+
+
+
+</script>
+}

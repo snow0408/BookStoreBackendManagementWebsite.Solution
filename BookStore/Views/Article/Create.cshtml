@@ -1,0 +1,165 @@
+﻿@model BookStore.Models.ViewModels.ArticleCreateVm
+@{
+    ViewBag.Title = "Create";
+    IEnumerable<SelectListItem> Categories = ViewBag.Categories;
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="page-title">
+            <div class="row">
+                <div class="col-6">
+                    <h3>
+                        新增文章
+                    </h3>
+                </div>
+                <div class="col-6">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="~/WeHome/Index">
+                                <svg class="stroke-icon">
+                                    <use href="../svg/icon-sprite.svg#stroke-home"></use>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="~/Article/Index">文章</a></li>
+                        <li class="breadcrumb-item active"><a href="~/Article/Create">新增文章</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>編輯貼文</h5>
+                    </div>
+                    <div class="card-body add-post">
+                        <form class="row needs-validation" novalidate="">
+                            <div class="col-sm-12">
+                                <div class="mb-3">
+                                    <label for="validationCustom01">標題:</label>
+                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @id = "Title", @type = "text", @placeholder = "輸入文章標題", @required = "" })
+                                    <div class="valid-feedback">很棒！</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label>類型：</label>
+                                    <div class="m-checkbox-inline">
+                                        <label for="edo-ani">
+                                            <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani" checked="">文字
+                                        </label>
+                                        <label for="edo-ani1">
+                                            <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani">圖像
+                                        </label>
+                                        <label for="edo-ani2">
+                                            <input class="radio_animated" id="edo-ani2" type="radio" name="rdo-ani" checked="">音訊
+                                        </label>
+                                        <label for="edo-ani3">
+                                            <input class="radio_animated" id="edo-ani3" type="radio" name="rdo-ani">影視
+                                        </label>
+                                    </div>
+                                </div>
+
+                                @*<div class="mb-3">
+                                        <div class="col-form-label">
+                                            類別:
+                                            <select class="js-example-placeholder-multiple col-sm-12" multiple="multiple">
+
+                                                <option value="Topic"> 主題專欄 </option>
+                                                <option value="Book"> 書籍推薦 </option>
+                                                <option value="News"> 最新消息 </option>
+                                                <option value="Event"> 藝文活動 </option>
+                                                <option value="Guide"> 活動指南 </option>
+                                                <option value="Video"> 影片專欄 </option>
+                                                <option value="About"> 關於我們 </option>
+                                            </select>
+                                        </div>
+                                    </div>*@
+
+                                <div class="mb-3">
+                                    <div class="col-form-label">
+                                        @Html.LabelFor(model => model.Category)
+                                        @Html.DropDownListFor(model => model.Category, Categories, new { @class = "form-control", @id = "Category", @required = "" })
+                                    </div>
+                                </div>
+
+                                <div class="email-wrapper">
+                                    <div class="theme-form">
+                                        <div class="mb-3">
+                                            @Html.LabelFor(model => model.Content, new { @class = "w-100" })
+                                            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @id = "Content", @rows = "4" })
+                                            <!--div class="toolbar-box">
+                                            <div id="toolbar8">
+                                                <span class="ql-formats">
+                                                    <select class="ql-size">
+                                                        <option value="small">Small</option>
+                                                        <option selected="">Normal</option>
+                                                        <option value="large">Large</option>
+                                                        <option value="huge">Huge</option>
+                                                    </select>
+                                                </span><span class="ql-formats">
+                                                    <button class="ql-bold">Bold</button>
+                                                    <button class="ql-italic">Italic</button>
+                                                    <button class="ql-underline">Underline</button>
+                                                    <button class="ql-strike">Strike</button>
+                                                    <button class="ql-script" value="sub"></button>
+                                                    <button class="ql-script" value="super"></button>
+                                                </span><span class="ql-formats">
+                                                    <button class="ql-header" value="1"></button>
+                                                    <button class="ql-header" value="2"></button>
+                                                </span><span class="ql-formats">
+                                                    <button class="ql-list" value="ordered">List</button>
+                                                    <button class="ql-list" value="bullet">Bullet</button>
+                                                    <button class="ql-indent" value="-1"></button>
+                                                    <button class="ql-indent" value="+1"></button>
+                                                </span><span class="ql-formats">
+                                                    <button class="ql-link">Link</button>
+                                                    <button class="ql-image">Image</button>
+                                                    <button class="ql-video">Video</button>
+                                                    <select class="ql-color"></select>
+                                                    <select class="ql-background"></select>
+                                                </span>-->
+                                            <!-- Add more options here-->
+                                            <!--<span class="ql-formats">
+                                                        <button class="ql-blockquote">Blockquote</button>
+                                                        <button class="ql-code-block"></button>
+                                                    </span><span class="ql-formats">
+                                                        <button class="ql-align" value=""></button>
+                                                        <button class="ql-align" value="center"></button>
+                                                        <button class="ql-align" value="right"></button>
+                                                        <button class="ql-align" value="justify"></button>
+                                                    </span><span class="ql-formats">
+                                                        <button class="ql-clean"></button>
+                                                    </span>
+                                                </div>
+                                                <div id="editor8"></div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*</form>
+                                <form class="dropzone" id="singleFileUpload" action="/upload.php">
+                                    <div class="m-0 dz-message needsclick">
+                                        <i class="icon-cloud-up"></i>
+                                        <h6 class="mb-0">拖動以上傳檔案</h6>
+                                    </div>
+                                </form>*@
+                            <div class="btn-showcase text-end">
+                                <button class="btn btn-primary" type="submit">新增</button>
+                                @Html.ActionLink("返回", "Index", "WeHome", new { @class = "btn btn-light" })
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+}

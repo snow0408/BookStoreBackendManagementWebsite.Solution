@@ -1,0 +1,189 @@
+﻿@model IEnumerable<BookStore202401.Models.ViewModels.OrderDetailsVm>
+
+
+
+
+@{
+    ViewBag.Title = "訂單細項";
+    
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6 d-flex">
+                <i class="fa-solid fa-pen-to-square" style="color: #B197FC; font-size:30px"></i>
+                <h4 class="fw-bold" style="color: #7366ff ">&nbsp;&nbsp;訂單細項</h4>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/WeHome/Index">
+                            <svg class="stroke-icon">
+                                <use href="~/svg/icon-sprite.svg#stroke-home"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="~/Orders/Index">訂單管理</a></li>
+                    <li class="breadcrumb-item active"><a href="~/Orders/Details">訂單細項</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="print.css" media="print">
+<input type="button" value="列印" onclick="window.print()">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2>訂單細項</h2>
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                客戶名稱
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProductName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Quantity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UnitPrice)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @ViewBag.MemberName
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                                </td>
+
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2>物流細項</h2>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                訂單編號
+                            </th>
+                            <th>
+                                追蹤號碼
+                            </th>
+                            <th>
+                                預計送達日期
+                            </th>
+                            <th>
+                                實際送達日期
+                            </th>
+                            <th>
+                                收件人地址
+                            </th>
+                            <th>
+                                收件人電話
+                            </th>
+                            <th>
+                                收件人姓名
+                            </th>
+
+                        </tr>
+
+
+                        @if (ViewBag.IsExitisLogistic)
+                        {
+                            <tr>
+                                <td>
+                                    @ViewBag.LogisticsOrder.OrderId
+                                </td>
+                                <td>
+                                    @ViewBag.LogisticsOrder.TrackingNumber
+                                </td>
+                                <td>
+                                    @ViewBag.LogisticsOrder.EstimatedDeliveryDate.ToString("yyyy-MM-dd")
+                                </td>
+                                <td>
+                                    @ViewBag.LogisticsOrder.ActualDeliveryDate.ToString("yyyy-MM-dd")
+                                </td>
+                                <td>
+                                    @ViewBag.LogisticsOrder.RecipientAddress
+                                </td>
+                                <td>
+                                    @ViewBag.LogisticsOrder.RecipientPhone
+                                </td>
+                                <td>
+                                    @ViewBag.LogisticsOrder.RecipientName
+                                </td>
+
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7">
+                                    尚未出貨
+                                </td>
+                            </tr>
+                        }
+
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3>員工備忘錄</h3>
+                    <form method="post" action="Details">
+                        <textarea id="message" name="message" class="employee-note-input" rows="5" cols="50">@ViewBag.Order.Message</textarea>
+                        <br>
+                        <input type="submit" value="留下訊息" class="btn btn-success" />
+                        <input type="text" name="id" value="@ViewBag.LogisticsOrder.OrderId" hidden />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    @Html.ActionLink("回上一頁", "Index")
+
+</div>

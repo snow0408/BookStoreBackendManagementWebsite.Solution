@@ -1,0 +1,128 @@
+﻿@model IEnumerable<BookStore.Models.Dtos.GroupPermissionDto>
+
+@{
+    ViewBag.Title = "權限控管";
+}
+<style>
+    /* 這裡寫入你的 CSS 樣式 */
+
+
+    .background-image {
+        background-image: url('https://images.unsplash.com/photo-1527176930608-09cb256ab504?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+
+
+    .product-action button {
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+        .product-action button:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+    .product-action a.badge-primary {
+        background-color: transparent;
+        color: #28a745 !important;
+    }
+
+    .container-1 {
+        position: relative;
+    }
+
+        .container-1 input[type="text"] {
+            width: 100%;
+            height: 38px;
+            padding: 10px;
+            font-size: 16px;
+            border: none; /* 移除邊框 */
+            border-radius: 30px;
+            outline: none; /* 移除聚焦的邊框效果 */
+            box-shadow: none;
+        }
+
+        .container-1 .icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+</style>
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6 d-flex">
+                <i class="fa-solid fa-users" style="color: #7366ff ; font-size:30px"></i>
+                <h4 class="fw-bold" style="color: #7366ff ">&nbsp;&nbsp;@ViewBag.Title</h4>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/WeHome/Index">
+                            <svg class="stroke-icon">
+                                <use href="~/svg/icon-sprite.svg#stroke-home"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="~/Group/Index">權限控管</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="list-product-header">
+                        <div>
+                            @Html.ActionLink("新增權限者", "Create", null, new { @class = "btn btn-primary" })
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    <strong>
+                                        權限者
+                                    </strong>
+
+                                </th>
+                                <th>
+                                    <strong>
+                                        操作
+                                    </strong>
+                                </th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GroupName)
+                                    </td>
+                                    <td>
+                                        <div class="product-action">
+                                            <a href="@Url.Action("Edit", new { id = item.Id })" class="">
+                                                <i class="fas fa-pencil-alt" style="color: #2cb8bd; font-size: 17px"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

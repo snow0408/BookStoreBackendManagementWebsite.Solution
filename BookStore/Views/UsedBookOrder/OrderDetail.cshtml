@@ -1,0 +1,184 @@
+﻿@model IEnumerable<BookStore.Models.ViewModels.UsedBookOrderDetailVm>
+
+@{
+    ViewBag.Title = "OrderDetail";
+    IEnumerable<SelectListItem> status = ViewBag.statusList;
+    string theStatus = ViewBag.Order.Status;
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6 d-flex">
+                <i class="fa-solid fa-pen-to-square" style="color: #B197FC; font-size:30px"></i>
+                <h4 class="fw-bold" style="color: #7366ff ">&nbsp;&nbsp;二手書訂單確認</h4>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/WeHome/Index">
+                            <svg class="stroke-icon">
+                                <use href="~/svg/icon-sprite.svg#stroke-home"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="~/UsedBookOrder/Index">二手書訂單管理</a></li>
+                    <li class="breadcrumb-item active"><a href="~/UsedBookOrder/Edit">二手書訂單確認</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <dl class="dl-horizontal">
+                        <dt>訂單編號：</dt>
+                        <dd>@ViewBag.Order.Id</dd>
+                        <dt>買家：</dt>
+                        <dd>@ViewBag.Order.BuyerName</dd>
+                        <dt>賣家：</dt>
+                        <dd>@ViewBag.Order.SellerName</dd>
+                        <dt>下單日期：</dt>
+                        <dd>@ViewBag.Order.OrderDate</dd>
+                        <dt>訂單狀態：</dt>
+                        <dd>
+                            <div class="input-group">
+                                @switch (theStatus)
+                                {
+                                    case "未付款": status = status.Where(x => x.Value == "未付款" || x.Value == "未出貨" || x.Value == "已取消"); break;
+                                    case "未出貨": status = status.Where(x => x.Value == "未出貨" || x.Value == "已取消" || x.Value == "已出貨"); break;
+                                    case "已出貨": status = status.Where(x => x.Value == "已出貨" || x.Value == "已送達" || x.Value == "退貨處理中"); break;
+                                    case "已送達": status = status.Where(x => x.Value == "已送達" || x.Value == "已完成" || x.Value == "退貨處理中"); break;
+                                    case "退貨處理中": status = status.Where(x => x.Value == "退貨處理中" || x.Value == "已退貨"); break;
+                                    default:
+                                        break;
+                                }
+
+                                @Html.DropDownList("OrderStatus", new SelectList(status, "Value", "Text", ViewBag.Order.Status), new { @class = "form-control", @id = "orderStatus" })
+                                <input type="submit" value="修改" class="btn btn-primary m-r-15" id="update" />
+
+                            </div>
+                        </dd>
+                        </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table mb-3">
+                        <tr>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.BookID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BookName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UnitPrice)
+                            </th>
+                            @*<th></th>*@
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BookID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BookName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                                </td>
+                                @*<td>
+                                          @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>*@
+                            </tr>
+                        }
+                    </table>
+                    <h6 class="text-end">運費：@ViewBag.Order.ShippingFee</h6>
+                    <h6 class="text-end">總金額：@ViewBag.Order.TotalAmount</h6>
+                </div>
+            </div>
+        </div>
+
+        @{
+            if (ViewBag.Logistics != null && ViewBag.Logistics.Count > 0)
+            {
+                foreach (var item in ViewBag.Logistics)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-4 b-r-dark">
+                                        <h6>物流單號</h6>
+                                        <p>@item.TrackingNumber</p>
+                                        <h6>預計送達</h6>
+                                        <p>@item.EstimateDeliveryDate</p>
+                                        <h6>實際送達</h6>
+                                        <p>@item.ActualDeliveryDate</p>
+                                    </div>
+                                    <div class="col-md-4 b-r-dark">
+                                        <h6>寄件人姓名</h6>
+                                        <p>@item.SenderName</p>
+                                        <h6>寄件人電話</h6>
+                                        <p>@item.SenderPhone</p>
+                                        <h6>寄件人地址</h6>
+                                        <p>@item.SenderAddress</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6>收件人姓名</h6>
+                                        <p>@item.RecipientName</p>
+                                        <h6>收件人電話</h6>
+                                        <p>@item.RecipientPhone</p>
+                                        <h6>收件人地址</h6>
+                                        <p>@item.RecipientAddress</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-primary" })
+        </div>
+
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+        const update = document.querySelector('#update');
+        const orderStatus = document.querySelector('#orderStatus');
+
+        //狀態更新
+        update.addEventListener('click', function () {
+            const id=@ViewBag.Order.Id;
+            const status = orderStatus.value;
+
+            $.get('/UsedBookOrder/UpdateStatus?id=' + id + '&status=' + status,
+                null,
+                function (result) {
+                    alert(result.message);
+                });
+        });
+
+
+        if (orderStatus.value == "已完成" || orderStatus.value == "已取消" || orderStatus.value == "已退貨") {
+            orderStatus.setAttribute("disabled", "disabled");
+            update.setAttribute("disabled", "disabled");
+        }
+    </script>
+}

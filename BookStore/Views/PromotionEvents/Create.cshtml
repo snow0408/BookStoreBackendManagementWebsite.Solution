@@ -1,0 +1,181 @@
+﻿@model BookStore.Models.ViewModels.PromotionEventCreateVm
+@{
+
+    ViewBag.Title = "Create";
+    IEnumerable<SelectListItem> offerStatus = ViewBag.OfferStatusList;
+    IEnumerable<SelectListItem> eventType = ViewBag.EventTypeList;
+    IEnumerable<SelectListItem> discountType = ViewBag.DiscountTypeList;
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6">
+                <h3>
+                    創建活動
+                </h3>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/WeHome/Index">
+                            <svg class="stroke-icon">
+                                <use href="../svg/icon-sprite.svg#stroke-home"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="~/PromotionEvents/Index">活動</a></li>
+                    <li class="breadcrumb-item active"><a href="~/PromotionEvents/Create">創建活動</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form theme-form">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label>@Html.LabelFor(model => model.EventName)</label>
+                                        @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control", @id = "EventName", @type = "text", @placeholder = "活動名稱" } })
+                                        @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label>@Html.LabelFor(model => model.EventSerialNumber)</label>
+                                        @Html.EditorFor(model => model.EventSerialNumber, new { htmlAttributes = new { @class = "form-control", @id = "EventSerialNumber", @type = "text", @placeholder = "活動序號" } })
+                                        @Html.ValidationMessageFor(model => model.EventSerialNumber, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>@Html.LabelFor(model => model.EventDescription)</label>
+                                        @Html.EditorFor(model => model.EventDescription, new { htmlAttributes = new { @class = "form-control", @id = "EventDescription", @type = "text", @placeholder = "活動敘述" } })
+                                        @Html.ValidationMessageFor(model => model.EventDescription, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label>@Html.LabelFor(model => model.DiscountType)</label>
+                                        @Html.DropDownList("DiscountType", discountType, new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label>@Html.LabelFor(model => model.EventType)</label>
+                                        @Html.DropDownList("EventType", eventType, new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label>@Html.LabelFor(model => model.DiscountRate)</label>
+                                        @Html.EditorFor(model => model.DiscountRate, new { htmlAttributes = new { @class = "form-control digits", @id = "DiscountRate", @type = "number", @placeholder = "輸入折扣金額" } })
+                                        @Html.ValidationMessageFor(model => model.DiscountRate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                @* <div class="col-sm-12">
+                                    <h6 class="sub-title">區間設定</h6>
+
+                                    <div class="theme-form">
+                                    <div>
+                                    <input class="datepicker-here form-control" id="reportrange" type="text" data-language="en">
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div> *@
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label>@Html.LabelFor(model => model.OfferStatus)</label>
+                                            @Html.DropDownList("OfferStatus", offerStatus, new { @class = "form-select" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label>@Html.LabelFor(model => model.StartDate)</label>
+                                            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "datepicker-here form-control", @id = "StartDate", @type = "text", @placeholder = "開始日期" } })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label>@Html.LabelFor(model => model.EndDate)</label>
+                                            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "datepicker-here form-control", @id = "EndDate", @type = "text", @placeholder = "結束日期" } })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label>@Html.LabelFor(model => model.EventDetails)</label>
+                                            @Html.TextAreaFor(model => model.EventDetails, new { @class = "form-control", @id = "EventDetails", @rows = "4" })
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--<div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label>@Html.LabelFor(model => model.EventFile)</label>-->
+                                @*Model => Model.EventFile, new { @class = "dropzone", @id = "singleFileUpload", @action = "/upload.php" }*@
+                                <!--@using (Html.BeginForm("Create", "Create", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", @id = "singleFileUpload", @action = "/upload.php" }))
+                                            {
+                                                <div class="dz-message needsclick">
+                                                    <i class="icon-cloud-up"></i>
+                                                    <h6>拖動檔案至此或點擊上傳檔案。</h6>
+                                                </div>
+                                            }
+                                            @Html.ValidationMessageFor(model => model.EventFile, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>-->
+
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="eventFile">@Html.LabelFor(model => model.EventFile)</label>
+                                    @Html.TextBoxFor(model => model.EventFile, new { @class = "form-control", @id = "eventFile", @type = "file", @multiple = "multiple" })
+                                    @Html.ValidationMessageFor(model => model.EventFile, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="text-end">
+                                            <input type="submit" value="新增" class="btn btn-success me-3" />
+                                            @Html.ActionLink("取消", "../PromotionEvents/Index", null, new { @class = "btn btn-outline-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>
+

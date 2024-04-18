@@ -1,0 +1,172 @@
+﻿@model BookStore.Models.ViewModels.EBooksPermissionVm
+
+@{
+    ViewBag.Title = "Create";
+    IEnumerable<SelectListItem> permissionType = ViewBag.PermissionTypeList;
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6 d-flex">
+                <i class="fa-solid fa-circle-plus" style="color: #7366ff ; font-size:30px"></i>
+                <h4 class="fw-bold" style="color: #7366ff ">&nbsp;&nbsp;電子書權限新增</h4>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/WeHome/Index">
+                            <svg class="stroke-icon">
+                                <use href="~/svg/icon-sprite.svg#stroke-home"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="~/EBooksPermission/Index">職員帳號管理</a></li>
+                    <li class="breadcrumb-item active"><a href="~/EBooksPermission/Create">電子書權限新增</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BookID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.BookID, new { htmlAttributes = new { @class = "form-control", @id = "bookId", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.BookID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.BookName, new { htmlAttributes = new { @class = "form-control", @id = "bookName" } })
+                        @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+                        <div class="list-group" id="bookList"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MemberID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MemberID, new { htmlAttributes = new { @class = "form-control", @id = "memberId", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.MemberID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MemberName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MemberName, new { htmlAttributes = new { @class = "form-control", @id = "memberName" } })
+                        @Html.ValidationMessageFor(model => model.MemberName, "", new { @class = "text-danger" })
+                        <div class="list-group" id="memberList"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PermissionType, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("PermissionType", permissionType, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="新增" class="btn btn-primary" />
+                        @Html.ActionLink("回上一頁", "Index", null, new { @class = "btn btn-outline-primary" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const divBookList = document.querySelector('#bookList');
+        const bookName = document.querySelector('#bookName');
+        const bookId = document.querySelector('#bookId');
+        var datas;
+
+        const memberName = document.querySelector('#memberName');
+        const memberId = document.querySelector('#memberId');
+        const divMemberList = document.querySelector('#memberList');
+        var memberDatas;
+
+        var matchedData;
+
+        //尋找書名
+        bookName.addEventListener('input', async (event) => {
+            const keyword = event.target.value.trim();
+
+            if (keyword.length > 0) {
+                //ajax
+                const url = `@Url.Content("~/ebookspermission/searchebook")?keyword=${keyword}`;
+                const response = await fetch(url);
+                datas = await response.json();
+                const bookNames = datas.map(book => book.BookName);
+
+                const buttonsHTML = bookNames.map(BookName => `<button type="button" class="list-group-item list-group-item-action" onclick="clickHandler('divBookList', '${BookName}')">${BookName}</button>`).join('');
+
+                divBookList.innerHTML = buttonsHTML;
+            }
+            else { divBookList.innerHTML = ""; }
+        })
+
+        //尋找會員
+        memberName.addEventListener('input', async (event) => {
+            const name = event.target.value.trim();
+
+            if (name.length > 0) {
+                //ajax
+                const url = `@Url.Content("~/ebookspermission/searchmember")?name=${name}`;
+                const response = await fetch(url);
+                memberDatas = await response.json();
+                const memberNames = memberDatas.map(member => member.Name);
+
+                const buttonsHTML = memberNames.map(Name => `<button type="button" class="list-group-item list-group-item-action" onclick="clickHandler('divMemberList', '${Name}')">${Name}</button>`).join('');
+
+                divMemberList.innerHTML = buttonsHTML;
+            }
+            else { divMemberList.innerHTML = ""; }
+        })
+
+
+        //選擇書籍or會員 自動填入id及完整名稱
+        const clickHandler = (buttonType, name) => {
+
+            switch (buttonType) {
+                case 'divBookList':
+                    bookName.value = name;
+
+                    matchedData = datas.find(data => data.BookName == name);
+                    bookId.value = matchedData.Id;
+
+                    divBookList.innerHTML = "";
+                    break;
+
+                case 'divMemberList':
+                    memberName.value = name;
+
+                    matchedData = memberDatas.find(data => data.Name == name);
+                    memberId.value = matchedData.Id;
+
+                    divMemberList.innerHTML = "";
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    </script>
+}

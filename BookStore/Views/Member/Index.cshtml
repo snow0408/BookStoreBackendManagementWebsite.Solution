@@ -1,0 +1,198 @@
+﻿@model IEnumerable<BookStore.Models.ViewModels.MemberVm>
+
+@{
+    ViewBag.Title = "";
+}
+<style>
+    /* 這裡寫入你的 CSS 樣式 */
+
+
+    .background-image {
+        background-image: url('https://images.unsplash.com/photo-1527176930608-09cb256ab504?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+
+
+    .product-action button {
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+        .product-action button:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+    .product-action a.badge-primary {
+        background-color: transparent;
+        color: #28a745 !important;
+    }
+
+    .container-1 {
+        position: relative;
+    }
+
+        .container-1 input[type="text"] {
+            width: 100%;
+            height: 38px;
+            padding: 10px;
+            font-size: 16px;
+            border: none; /* 移除邊框 */
+            border-radius: 30px;
+            outline: none; /* 移除聚焦的邊框效果 */
+            box-shadow: none;
+        }
+
+        .container-1 .icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+</style>
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6 d-flex">
+                <i class="fa-solid fa-users" style="color: #7366ff ; font-size:30px"></i>
+                <h4 class="fw-bold" style="color: #7366ff ">&nbsp;&nbsp;會員列表</h4>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/WeHome/Index">
+                            <svg class="stroke-icon">
+                                <use href="~/svg/icon-sprite.svg#stroke-home"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="~/Member/Index">會員管理</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="list-product-header">
+                        <div class="d-flex justify-content-between">
+
+                            @Html.ActionLink("新增會員", "Create", null, new { @class = "btn btn-primary" })
+                            <form method="get">
+                                <div class="row">
+
+
+                                    @using (Html.BeginForm("Index", "Member", FormMethod.Get))
+                                    {
+                                        <div class="box">
+                                            <div class="container-1">
+                                                @Html.TextBox("search", null, new { id = "search", placeholder = "搜尋名字...", style = "background-color: #ebe6f5;" })
+                                                <input type="submit" value="搜尋" style="display: inline; opacity: 0; position: absolute; left: -9999px;" />
+                                                <span class="icon" onclick="submitForm()"><i class="fa fa-search" style="color: #a6a6a6"></i></span>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </form>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    <strong>
+                                        @Html.DisplayNameFor(model => model.Name)
+                                    </strong>
+                                </th>
+                                <th>
+                                    <strong>
+                                        @Html.DisplayNameFor(model => model.Gender)
+                                    </strong>
+                                </th>
+                                <th>
+                                    <strong>
+                                        @Html.DisplayNameFor(model => model.DateOfBirth)
+                                    </strong>
+                                </th>
+                                <th>
+                                    <strong>
+                                        @Html.DisplayNameFor(model => model.Email)
+                                    </strong>
+                                </th>
+                                <th>
+                                    <strong>
+                                        @Html.DisplayNameFor(model => model.MembersLevel)
+                                    </strong>
+                                </th>
+                                <th>
+                                    <strong>
+                                        @Html.DisplayNameFor(model => model.Address)
+                                    </strong>
+                                </th>
+                                <th>
+                                    <strong>
+                                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                                    </strong>
+                                </th>
+                                <th>
+                                    <strong>
+                                        @Html.DisplayNameFor(model => model.Points)
+                                    </strong>
+                                </th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @(item.Gender ? "男" : "女")
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MembersLevel)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Points)
+                                    </td>
+                                    <td>
+                                        <div class="product-action">
+                                            <a href="@Url.Action("Edit", new { id = item.Id })" class="">
+                                                <i class="fas fa-pencil-alt" style="color: #2cb8bd; font-size: 17px"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

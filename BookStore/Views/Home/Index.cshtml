@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@section Styles {
+    <style>
+        #main {
+            position: relative;
+            overflow: hidden; /* 隱藏超出容器的內容 */
+        }
+
+        .container-fluid.bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/homeBg.jpg');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+}
+<div class="container-fluid bg-image"></div>

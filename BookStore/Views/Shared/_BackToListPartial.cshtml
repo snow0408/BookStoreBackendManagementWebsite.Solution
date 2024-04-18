@@ -1,0 +1,9 @@
+﻿@*@model string*@
+@{
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<a href="@Url.Action("Index", controllerName)" class="btn btn-sm btn-success">
+    <i class="fa-solid fa-list"></i>
+    回上一頁
+</a>

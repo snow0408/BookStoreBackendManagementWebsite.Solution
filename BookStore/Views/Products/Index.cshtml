@@ -1,0 +1,384 @@
+﻿@model IEnumerable<BookStore.Models.ViewModels.ProductIndexVm>
+
+@{
+    ViewBag.Title = "產品管理";
+    IEnumerable<SelectListItem> productSelectList = ViewBag.ProductStatusList;
+    IEnumerable<SelectListItem> productCategorySelectList = ViewBag.ProductCategoryList;
+
+}
+<style>
+    .product-action a, .product-action button {
+        display: inline-block;
+        margin-right: 5px;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+
+
+        .product-action a.btn-info {
+            color: #fff;
+        }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .delete-button {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <h2 class="mb-3">商品管理</h2>
+                    <hr />
+                    <p>
+                        @Html.ActionLink("新增", "Create", null, new { @class = "btn btn-success mb-2" })
+                    </p>
+
+                    <form>
+                        <div class="row mb-2 d-flex flex-row">
+                            <div class="me-2 mb-3 col-8">
+                                <label class="form-label" for="name">名稱:</label>
+                                <input class="form-control" id="name" name="Name" value="@ViewBag.Name" />
+                            </div>
+
+                            <div class="d-flex flex-row mb-2">
+                                <div class="col-3">
+                                    <label class="form-label" for="starPrice">價格:</label>
+                                    <div class="d-flex flex-row">
+                                        <div class="me-2 col-5">
+                                            <input type="number" class="form-control" id="MinPrice" name="MinPrice" value="@ViewBag.MinPrice" />
+                                        </div>
+                                        <div class="me-2 d-flex align-items-center">-</div>
+                                        <div class="me-3 col-5">
+                                            <input type="number" class="form-control" id="MaxPrice" name="MaxPrice" value="@ViewBag.MaxPrice" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label" for="starPrice">上架狀態:</label>
+                                    <div class="d-flex flex-row">
+                                        <div class="me-3">
+                                            @Html.DropDownList("Status", productSelectList, new { @class = "form-select" })
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label" for="starPrice">分類:</label>
+                                    <div class="d-flex flex-row">
+                                        <div class="me-3">
+                                            @Html.DropDownList("Category", productCategorySelectList, new { @class = "form-select" })
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <label class="form-label" for="starPrice">庫存量:</label>
+                                    <div class="d-flex flex-row">
+                                        <select name="Stock" id="Stock" class="form-select me-3" value="@ViewBag.Stock">
+                                            <option value="" @(ViewBag.Stock == null ? "selected" : "")>全部</option>
+                                            <option value=100 @(ViewBag.Stock == 100 ? "selected" : "")>100以下</option>
+                                            <option value=50 @(ViewBag.Stock == 50 ? "selected" : "")>50以下</option>
+                                            <option value=10 @(ViewBag.Stock == 10 ? "selected" : "")>10以下</option>
+                                            <option value="0" @(ViewBag.Stock == 0 ? "selected" : "")>缺貨</option>
+                                        </select>
+                                        <div>
+                                            <input type="submit" class="btn btn-primary " value="查詢" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProductStatus)
+                            </th>
+                            @*<th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.Category)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Stock)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr id="product-@item.Id">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductStatus)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Category)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Stock)
+                                </td>
+                                <td>
+                                <td class="product-action">
+                                    <a href="@Url.Action("Edit", new { id = item.Id })" class="">
+                                        <i class="fas fa-pencil-alt" style="color: #2cb8bd; font-size: 17px;"></i>
+                                    </a>
+                                    &thinsp;
+                                    <a href="javascript:void(0);" class="delete-btn" data-bs-toggle="modal" data-bs-target="#check-dele-@item.Id" data-id="@item.Id">
+                                        <i class="fas fa-trash-alt" style="color: #f38181; font-size: 17px"></i>
+                                    </a>
+                                    &thinsp;
+                                    <a href="javascript:void(0);" class="keywordBtn" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#addKeyword-@item.Id" style="color: #2cb8bd; font-size: 17px; border: none; background: none; padding: 0;">
+                                        <i class="fa-brands fa-kickstarter" style="color: #6c87f4;"></i>
+                                    </a>
+                                    &thinsp;
+                                    <a href="@Url.Action("Details", "PdInStock", new { id = item.Id  })" class="">
+                                        <i class="fa-solid fa-cart-flatbed" style="color: #B197FC;"></i>
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        }
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="check-dele-@item.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5">刪除確認</h3>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body compose-modal">
+                    <p>確定要刪除「@item.Name」嗎?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary delBtn" type="button" data-id="@item.Id" data-bs-dismiss="modal">刪除確定</button>
+                    <button class="btn btn-light" type="button" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addKeyword-@item.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5">新增關鍵詞</h3>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body compose-modal">
+                    <div class="d-flex flex-row">
+                        <div class="me-2">
+                            <input class="keywordInput form-control" id="keywordInput-@item.Id" data-id="@item.Id" /> 
+                        </div>
+                        @*<button class="btn btn-primary " type="button" data-id="@item.Id" data-bs-dismiss="modal">新增</button>*@
+                    </div>
+                    
+
+                </div>
+                <div class="modal-footer">
+                                        
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    <script>
+
+        const delBtn = document.querySelectorAll(".delBtn");    
+        const keywordInput = document.querySelectorAll(".keywordInput");
+        const keywordBtn = document.querySelectorAll(".keywordBtn")
+
+        delBtn.forEach((elem) => {
+            elem.addEventListener("click", () => {
+
+                let productId = elem.getAttribute("data-id")
+                let delUrl = `/api/ProductsAPI/${productId}`;
+                //let flag = confirm("是否刪除此產品");
+
+                //if (flag) {
+                $.ajax({
+                    url: delUrl,                    // url位置
+                    type: 'DELETE',                 // delete
+                    data: {},                       // 輸入的資料
+                    error: function (xhr) {         // 錯誤後執行的函數
+                        alert(`發生錯誤: ${xhr.responseText}`);
+                    },
+                    success: function (response) {  // 成功後要執行的函數
+                        document.querySelector(`#product-${productId}`).innerHTML = "";
+                    }
+                });                
+            });
+        })
+
+        
+
+
+        let initTagify = () => {
+
+            keywordInput.forEach((elem) => {
+
+                let productId = elem.getAttribute("data-id")
+
+                $.ajax({
+                    url: `/api/ProductKeywordsAPI?productId=${productId}`,
+                    type: 'GET',
+                    contentType: 'application/json',                    
+                    success: function (data) {
+                        elem.value = data;
+                    },
+                });
+
+
+                let onTagAdded = (e) => {
+                    let tagData = e.detail.data;
+                    tagData["ProductId"] = productId;
+                                                
+                    $.ajax({
+                        url: '/api/ProductKeywordsAPI',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(tagData),
+                        success: function (response) {
+                        },
+                        error: function (xhr, status, error) {
+
+                        }
+                    });                   
+                   
+                    
+                }
+
+                let onTagRemoved = (e) => {
+                    let tagData = e.detail.data;
+
+                    $.ajax({
+                        url: `/api/ProductKeywordsAPI?keywordId=${tagData.KeywordId}&productId=${productId}`,
+                        type: 'DELETE',
+                        contentType: 'application/json',
+                        data: JSON.stringify(tagData),
+                        success: function (response) {
+                          
+                        },
+                        error: function (xhr, status, error) {
+                            console.log('刪除失敗', error);
+                        }
+                    });
+                }
+
+
+                tagifyKeyword = new Tagify(elem, {
+                    enforceWhitelist: true,
+                    whitelist: keywordArr,
+                    mapValueTo: "id",                    
+                    dropdown: {
+                        searchKeys: ["value"],
+                        enabled: 0 
+                    },
+                    callbacks: {
+                        add: onTagAdded,
+                        remove: onTagRemoved
+                    },
+                });
+
+            });
+
+            keywordBtn.forEach((elem) => {
+                elem.addEventListener("click", () => {
+                    let productId = elem.getAttribute("data-id")
+
+                    $.ajax({
+                        url: `/api/ProductKeywordsAPI?productId=${productId}`,
+                        type: 'GET',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            const singleKeywordInput = document.querySelector(`#keywordInput-${productId}`);
+                            singleKeywordInput.value = data;
+                        },
+                    });
+
+                });
+            })
+
+        }
+
+        let urlKeyword = "/api/keywordsAPI"
+        let keywordArr = []
+
+        $.ajax({
+            url: urlKeyword,
+            type: "GET",
+            success: function (data) { 
+                $.each(data,function (keyword,key) {
+                    keywordArr.push({ KeywordId: key, value: keyword });
+                })
+
+                initTagify();
+
+            },
+            error: function () {
+                alert("讀取錯誤");
+            }
+        });
+
+        
+
+    </script>
+
+}

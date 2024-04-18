@@ -1,0 +1,221 @@
+﻿@model IEnumerable<BookStore.Models.ViewModels.UsedBookOrderVm>
+
+
+@{
+    ViewBag.Title = "Index";
+    IEnumerable<SelectListItem> status = ViewBag.statusList;
+}
+<style>
+    /* 這裡寫入你的 CSS 樣式 */
+    .product-action button {
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+        .product-action button:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+    .product-action a.badge-primary {
+        background-color: transparent;
+        color: #28a745 !important;
+    }
+
+    .container-1 {
+        position: relative;
+    }
+
+        .container-1 input[type="text"] {
+            width: 100%;
+            height: 38px;
+            padding: 10px;
+            font-size: 16px;
+            border: none; /* 移除邊框 */
+            border-radius: 30px;
+            outline: none; /* 移除聚焦的邊框效果 */
+            box-shadow: none;
+        }
+
+        .container-1 .icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+</style>
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-6 d-flex">
+                <i class="fa-solid fa-book-open-reader" style="color: #7366ff ; font-size:30px"></i>
+
+                <h4 class="fw-bold" style="color: #7366ff ">&nbsp;&nbsp;二手書訂單管理</h4>
+            </div>
+            <div class="col-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="~/WeHome/Index">
+                            <svg class="stroke-icon">
+                                <use href="~/svg/icon-sprite.svg#stroke-home"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="~/UsedBookOrder/Index">二手書訂單管理</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <form method="get" id="selectForm" class="mb-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-11 col-xl-2">
+                        <label for="status">訂單狀態:</label>
+                        <div>
+                            @Html.DropDownList("status", status, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-11 col-xl-2">
+                        <label for="member">依會員查詢:</label>
+                        <div>
+                            @Html.TextBox("member", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <label>下單時間:</label>
+                        <div class="row">
+                            <div class="col-5">
+                                <input class="form-control dateinput" id="datetime-local" type="date" name="startDate" value=publisherdate>
+                            </div>
+                            <div class="col-1"><label>至</label></div>
+                            <div class="col-5">
+                                <input class="form-control dateinput" id="datetime-local" type="date" name="endDate" value=publisherdate>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl">
+                        <label style="visibility:hidden">1</label>
+                        <div>
+                            <input type="submit" value="查詢" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Id)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.BuyerName)
+                        </th>
+
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.SellerName)
+                        </th>
+
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.OrderDate)
+                        </th>
+
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.TotalAmount)
+                        </th>
+
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.ShippingFee)
+                        </th>
+
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.PaymentMethod)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BuyerName)
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SellerName)
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDate)
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalAmount)
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShippingFee)
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentMethod)
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("OrderDetail", new { id = item.Id })" class="">
+                                    <i class="fa-regular fa-pen-to-square" style="color: #f38181; font-size: 17px"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        // 使用 JavaScript 監聽下拉選單變更事件
+        document.getElementById("status").addEventListener("change", function () {
+            document.getElementById("selectForm").submit();
+        });
+    </script>
+}

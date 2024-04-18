@@ -1,0 +1,163 @@
+﻿@model BookStore.Models.ViewModels.ProductDetailsVm
+
+
+@{
+    ViewBag.Title = "進貨表單";
+    ViewBag.OriginData = Model;
+}
+
+<style>
+    .form-container {
+        position: relative;
+        padding: 20px;
+        border: 1px solid #ced4da;
+        margin-bottom: 20px;
+    }
+
+        .form-container label {
+            position: absolute;
+            left: 0;
+        }
+
+        .form-container .form-control,
+        .form-container .btn-primary,
+        .form-container .input-group {
+            position: absolute;
+            left: 100px; /* 每個元素的左邊距 */
+        }
+
+        .form-container #datetime-local {
+            top: 0;
+        }
+
+        .form-container #Qty {
+            top: 50px;
+        }
+
+        .form-container #BuyPrice {
+            top: 100px;
+        }
+
+        .form-container .btn-primary {
+            top: 150px;
+        }
+
+        .form-container .touchspin-wrapper {
+            display: block;
+        }
+
+        .form-container .btn-touchspin {
+            /* 按鈕樣式 */
+        }
+
+        .form-container .input-touchspin {
+            /* 輸入框樣式 */
+        }
+</style>
+
+<!-- 確保引入了 Bootstrap 的 CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<div class="container mt-3">
+    @using (Html.BeginForm("StockIn", "PdInStock", FormMethod.Post, new { id = "stockInForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- 第一行：進貨日期和進貨價格 -->
+        <div class="form-row">
+            <!-- 進貨日期 -->
+            <div class="col-md-6 mb-3">
+                <label for="datetime-local">進貨日期</label>
+                <input type="date" id="datetime-local" name="pdInStockVm.BuyDate" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <!-- 進貨價格 -->
+            <div class="col-md-6 mb-3">
+                <label for="BuyPrice">進貨價格</label>
+                <input type="text" id="BuyPrice" name="pdInStockVm.BuyPrice" class="form-control" />
+            </div>
+        </div>
+
+        <!-- 第二行：進貨數量和提交按鈕 -->
+        <div class="form-row">
+            <!-- 進貨數量 -->
+            <div class="col-md-6 mb-3">
+                <label for="Qty">進貨數量</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary decrement-touchspin" type="button">-</button>
+                    </div>
+                    <input type="number" id="Qty" name="pdInStockVm.Qty" class="form-control text-center input-touchspin" value="1">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary increment-touchspin" type="button">+</button>
+                    </div>
+                </div>
+            </div>
+            <!-- ProductId-->
+            <input type="text" name="ProductId" hidden value="@Model.ProductId" />
+            <!-- 提交按鈕 -->
+            <div class="col-md-6 mb-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary btn-block">提交</button>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- 這裡引入 Bootstrap 的 JavaScript 依賴項，通常是 jQuery 和 Popper.js -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+@*@section Scripts {
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // 使用事件委托，绑定到静态父元素上
+                $(document).on('click', '.increment-touchspin', function () {
+                    var $qtyInput = $(this).closest('.input-group').find('.input-touchspin');
+                    var currentVal = parseInt($qtyInput.val(), 10);
+                    $qtyInput.val(currentVal + 1);
+                });
+
+                $(document).on('click', '.decrement-touchspin', function () {
+                    var $qtyInput = $(this).closest('.input-group').find('.input-touchspin');
+                    var currentVal = parseInt($qtyInput.val(), 10);
+                    $qtyInput.val(Math.max(currentVal - 1, 1)); // 防止数量小于1
+                });
+
+                // 進貨表單提交事件處理
+                $('#stockInForm').submit(function (event) {
+                    event.preventDefault(); // 防止表單默認提交
+                    var formData = $(this).serialize(); // 序列化表單數據
+
+                    $.ajax({
+                        type: "POST",
+                        url: $(this).attr('action'),
+                        data: formData,
+                        success: function (response) {
+                            updatePdInStockRecords();
+                        },
+                        error: function () {
+                            alert("進貨操作失敗");
+                        }
+                    });
+                });
+
+                function updatePdInStockRecords() {
+                    $.ajax({
+                        url: '@Url.Action("GetPdInStockRecordsPartial", "PdInStock", new { productId = Model.ProductId })',
+                        success: function (data) {
+                            $('#pdInStockRecords').html(data);
+                            // 清空輸入欄位
+                            $('#datetime-local').val('');
+                            $('#BuyPrice').val('');
+                            $('#Qty').val('1'); // 或者設置為您想要的默認值
+                        },
+                        error: function () {
+                            alert("進貨記錄更新失敗");
+                        }
+                    });
+                }
+            });
+        </script>
+    }*@
