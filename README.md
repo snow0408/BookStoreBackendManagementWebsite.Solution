@@ -14,3 +14,6 @@
 UsedBooksOrders(二手書訂單)相關之所有檔案，含Controllers, Views, Models, 及資料庫設計
 
 EBooksPermission(電子書權限)相關之所有檔案
+
+## 實際操作介紹影片
+https://youtu.be/slrry0ncdy8
